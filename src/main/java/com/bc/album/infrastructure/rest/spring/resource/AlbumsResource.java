@@ -3,6 +3,7 @@ package com.bc.album.infrastructure.rest.spring.resource;
 import java.util.List;
 
 import com.bc.album.domain.port.in.AlbumsService;
+import com.bc.album.domain.port.in.EnrichService;
 import com.bc.album.infrastructure.rest.spring.dto.AlbumDto;
 import com.bc.album.infrastructure.rest.spring.mapper.AlbumsMapper;
 import com.bc.album.infrastructure.rest.spring.spec.AlbumsApi;
@@ -33,6 +34,8 @@ public class AlbumsResource implements AlbumsApi {
 
     private final AlbumsService service;
 
+    private final EnrichService enrichService;
+
     private final AlbumsMapper mapper;
 
     /**
@@ -45,6 +48,17 @@ public class AlbumsResource implements AlbumsApi {
            ) {
         TimedRequest<Void, List<AlbumDto>> timedRequest = new TimedRequest<>("albums", null);
         return ResponseEntity.ok(timedRequest.handle(() -> mapper.map(service.getAlbums())));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public ResponseEntity<List<AlbumDto>> getEnrichmentAlbums(
+            @ApiParam(required = true) @RequestHeader(value = "X-B3-TraceId") String xB3TraceId,
+            @ApiParam(required = true) @RequestHeader(value = "Authorization") String authorization
+    ) {
+        TimedRequest<Void, List<AlbumDto>> timedRequest = new TimedRequest<>("albums", null);
+        return ResponseEntity.ok(timedRequest.handle(() -> mapper.map(enrichService.enrich(false))));
     }
 
 }

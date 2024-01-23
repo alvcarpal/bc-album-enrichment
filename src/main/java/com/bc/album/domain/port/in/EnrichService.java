@@ -1,14 +1,11 @@
-package com.bc.album.application.usescases;
+package com.bc.album.domain.port.in;
 
 import com.bc.album.domain.operational.Album;
-import com.bc.album.domain.port.in.AlbumsService;
-import com.bc.album.domain.port.out.AlbumsRepository;
-import lombok.AllArgsConstructor;
 import java.util.List;
 
 /**
- * AlbumsService interface implementation.
- * In com.bc.album.application.usescases package.
+ * EnrichService interface.
+ * In com.bc.album.domain.port.in
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -17,19 +14,17 @@ import java.util.List;
  * furnished to do so.
  *
  * @author Álvaro Carmona
- * @since 22/01/2024
+ * @since 23/01/2024
  */
-@AllArgsConstructor
-public class AlbumsUseCase implements AlbumsService {
-
-    private final AlbumsRepository repository;
+public interface EnrichService {
 
     /**
-     * {@inheritDoc}
+     *  The enrich method enables the enrichment of Album data by retrieving information from
+     *  the corresponding endpoints of the Album API and storing it in the database if necessary.
+     *  Use persist=true if saving is required, or false otherwise.
+     *
+     * @return The albums' information.
      */
-    @Override
-    public List<Album> getAlbums() {
-        return repository.getAlbums();
-    }
+    List<Album> enrich(boolean persist);
 
 }
