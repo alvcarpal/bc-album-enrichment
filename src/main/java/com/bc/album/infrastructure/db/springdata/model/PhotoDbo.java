@@ -20,6 +20,9 @@ public class PhotoDbo extends Audit{
   @Column(name = "album_id")
   private Integer albumId;
 
+  @Column(name = "title")
+  private String title;
+
   @Column(name = "url")
   private String url;
 

@@ -13,6 +13,8 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 @AutoConfigureEmbeddedDatabase
 public abstract class IntegrationTest {
 
+    public static final String OUTPUT_FILES_PATH = "src/test/resources/infrastructure/rest/output/";
+
     @ClassRule
     public static final SpringClassRule scr = new SpringClassRule();
 

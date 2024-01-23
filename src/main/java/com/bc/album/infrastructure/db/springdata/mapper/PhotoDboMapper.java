@@ -1,14 +1,13 @@
 package com.bc.album.infrastructure.db.springdata.mapper;
 
-import com.bc.album.domain.operational.Album;
+import com.bc.album.domain.operational.Photo;
 import com.bc.album.infrastructure.db.springdata.model.AlbumDbo;
+import com.bc.album.infrastructure.db.springdata.model.PhotoDbo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.util.List;
-
 /**
- * AlbumsDboMapper interface. Mapstruct album mapper to domain.
+ * PhotoDboMapper interface. Mapstruct album mapper to domain.
  * In com.bc.album.infrastructure.db.springdata.mapper.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -20,22 +19,15 @@ import java.util.List;
  * @author Álvaro Carmona
  * @since 22/01/2024
  */
-@Mapper(componentModel = "spring", uses = PhotoDboMapper.class)
-public interface AlbumsDboMapper {
+@Mapper(componentModel = "spring")
+public interface PhotoDboMapper {
 
     /**
-     * Map the given dbo album to domain.
-     * @param album {@link AlbumDbo} object.
+     * Map the given dbo photo to domain.
+     * @param photo {@link AlbumDbo} object.
      * @return The mapped dto object.
      */
     @Mapping(target = "id", source = "pk.id")
-    Album map(AlbumDbo album);
-
-    /**
-     * Map the given dbo album list to domain list.
-     * @param albums list of a {@link Album} objects.
-     * @return The mapped dto list.
-     */
-    List<Album> map(List<AlbumDbo> albums);
+    Photo map(PhotoDbo photo);
 
 }
