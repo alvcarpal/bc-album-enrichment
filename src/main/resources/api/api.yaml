@@ -1,0 +1,290 @@
+openapi: 3.0.1
+info:
+  title: Album and Photo API Enrichment
+  description: The Album Enrichment API enables accessibility, saving , and enrichment of photo album information for a user.
+  contact:
+    name: Álvaro Carmona
+    url: https://www.linkedin.com/in/%C3%A1lvaro-carmona-palomares/
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "2.0"
+servers:
+  - url: http://localhost:8080
+    description: Local server url
+tags:
+  - name: Enrichment
+  - name: Albums Information
+paths:
+
+  /albums/enrich:
+    get:
+      tags:
+        - Enrichment
+      summary: Enrich the albums with all the photos and return that information.
+      description: "Enrich the information by obtaining all the albums and their corresponding photos via API, 
+      enhancing this data through an algorithm. The result is returned by retrieving all the user's albums with 
+      their respective photos."
+      operationId: getEnrichmentAlbums
+      parameters:
+        - $ref: '#/components/parameters/X-B3-TraceId'
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Albums'
+        400:
+          $ref: '#/components/responses/error400'
+        401:
+          $ref: '#/components/responses/error401'
+        403:
+          $ref: '#/components/responses/error403'
+        404:
+          $ref: '#/components/responses/error404'
+        405:
+          $ref: '#/components/responses/error405'
+        500:
+          $ref: '#/components/responses/error500'
+        503:
+          $ref: '#/components/responses/error503'
+        504:
+          $ref: '#/components/responses/error504'
+
+
+  /albums:
+    get:
+      tags:
+        - Albums Information
+      summary: Get the information for all the albums.
+      description: "Retrieve a list with information for all albums and their photos. Each album contains a list with 
+                    1 or n photos. The insertion order is maintained, so the first returned albums are the oldest ones."
+      operationId: getAlbums
+      parameters:
+        - $ref: '#/components/parameters/X-B3-TraceId'
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Albums'
+        400:
+          $ref: '#/components/responses/error400'
+        401:
+          $ref: '#/components/responses/error401'
+        403:
+          $ref: '#/components/responses/error403'
+        404:
+          $ref: '#/components/responses/error404'
+        405:
+          $ref: '#/components/responses/error405'
+        500:
+          $ref: '#/components/responses/error500'
+        503:
+          $ref: '#/components/responses/error503'
+        504:
+          $ref: '#/components/responses/error504'
+
+components:
+
+  schemas:
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+          minLength: 8
+          maxLength: 8
+          example: '01400001'
+          description: 'A 8-digit machine readable application error code. Not to be confused with the HTTP status code in the response.'
+        message:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Field [%s] is missing'
+          description: 'A long, human readable description of the error.'
+        level:
+          type: string
+          minLength: 1
+          maxLength: 50
+          example: 'Fatal'
+          description: 'Severity classification of the error.'
+        description:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'Header field missing'
+          description: 'Trace of the exception.'
+
+    Albums:
+      type: array
+      items:
+        $ref: '#/components/schemas/Album'
+
+    Album:
+      type: object
+      properties:
+        userId:
+          type: integer
+          description: 'Unique user identifier'
+          example: 100
+        id:
+          type: integer
+          description: 'Unique album identifier'
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'quidem molestiae enim'
+          description: 'The title of the album'
+        photos:
+          type: array
+          items:
+            $ref: '#/components/schemas/Photo'
+
+    Photo:
+      type: object
+      properties:
+        albumId:
+          type: integer
+          description: 'The ID of the album to which the photo belongs'
+          example: 200
+        id:
+          type: integer
+          description: 'Unique photo identifier'
+          example: 5000
+        title:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'ut alias dolore qui ea culpa recusandae doloribus magnam'
+          description: 'The title of the photo'
+        url:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'https://via.placeholder.com/600/188c92'
+          description: 'The URL of the photo'
+        thumbnailUrl:
+          type: string
+          minLength: 1
+          maxLength: 255
+          example: 'https://via.placeholder.com/150/188c92'
+          description: 'The URL of the thumbnail for the photo'
+
+  parameters:
+
+    X-B3-TraceId:
+      in: header
+      name: X-B3-TraceId
+      required: true
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 50
+      description: 'The TraceId indicates the overall ID of the trace. Every span in a trace shares this ID. The X-B3-TraceId header is encoded as 32 or 16 lower-hex characters. For example, a 128-bit TraceId header might look like 463ac35c9f6413ad48485a3953bb6124.'
+
+    #This must be defined in order to allow the proper code generation
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'The Authorization request header contains the credentials to authenticate a user to a server'
+
+    #This must be defined in order to allow the proper code generation
+    Accept:
+      name: Accept
+      in: header
+      required: true
+      schema:
+        type: string
+      description: 'The header accept indicates the content type the client is able to process. Its value is a MIME type.'
+
+  responses:
+
+    error400:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error401:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error403:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error404:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error405:
+      description: Method not allowed
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error406:
+      description: Not Acceptable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error415:
+      description: Unsupported media type
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error500:
+      description: Unexpected errors
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error503:
+      description: Service is unavailable
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    error504:
+      description: Gateway timeout
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  # 1) Define the security scheme type (HTTP bearer)
+  securitySchemes:
+    bearerAuth:            # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT    # optional, arbitrary value for documentation purposes
+# 2) Apply the security globally to all albums
+security:
+  - bearerAuth: []         # use the same name as above
