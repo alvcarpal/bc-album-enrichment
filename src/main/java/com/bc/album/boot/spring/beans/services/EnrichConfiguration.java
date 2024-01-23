@@ -10,11 +10,23 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class EnrichConfiguration {
 
+    /**
+     * Bean enrich service.
+     *
+     * @param restTemplate Rest template bean.
+     * @param selector Selector enricher bean.
+     * @return The created object.
+     */
     @Bean
     public EnrichService enrichService(RestTemplate restTemplate, SelectorEnricher selector) {
         return new EnrichUseCase(restTemplate, selector);
     }
 
+    /**
+     * Bean selector enricher.
+     *
+     * @return The created object.
+     */
     @Bean
     public SelectorEnricher selectorEnricher() {
         return new SelectorEnricher();

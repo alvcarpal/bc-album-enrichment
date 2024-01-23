@@ -35,13 +35,24 @@ public class EnrichUseCase implements EnrichService {
      */
     @Override
     public List<Album> enrich(boolean persist) {
+        List<Album> albums = selector.enriching(retrieveAlbumApiData(), retrievePhotoApiData(), "AlbumEnricher");
+        return persist ? null : albums;
+    }
+
+    /**
+     * Retrieves information from the Albums API by making a REST template call to the configured URL
+     */
+    private List<Album> retrieveAlbumApiData() {
         ApiClient<Album> albumApiClient = ApiClientFactory.createApiClient(Album.class, restTemplate);
-        List<Album> albums = albumApiClient.fetchData();
+        return albumApiClient.fetchData();
+    }
 
+    /**
+     * Retrieves information from the Photos API by making a REST template call to the configured URL
+     */
+    private List<Photo> retrievePhotoApiData() {
         ApiClient<Photo> photoApiClient = ApiClientFactory.createApiClient(Photo.class, restTemplate);
-        List<Photo> photos = photoApiClient.fetchData();
-
-        return selector.enriquecerDatos(albums, photos, "AlbumEnricher");
+        return photoApiClient.fetchData();
     }
 
 }
