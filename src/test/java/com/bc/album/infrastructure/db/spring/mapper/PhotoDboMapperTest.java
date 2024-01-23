@@ -23,10 +23,17 @@ public class PhotoDboMapperTest {
     private PhotoDboMapper mapper;
 
     @Test
-    public void testMapAlbum() {
+    public void testMapPhoto() {
         when(mapper.map(photoDbo)).thenReturn(photo);
         Photo actual = mapper.map(photoDbo);
         assertEquals(photo, actual);
+    }
+
+    @Test
+    public void testToDboPhoto() {
+        when(mapper.toDbo(photo)).thenReturn(photoDbo);
+        PhotoDbo actual = mapper.toDbo(photo);
+        assertEquals(photoDbo, actual);
     }
 
 }

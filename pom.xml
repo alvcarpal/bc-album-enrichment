@@ -29,6 +29,7 @@
         <mockito.core.version>2.23.4</mockito.core.version>
         <jackson-databind-nullable.version>0.2.1</jackson-databind-nullable.version>
         <embedded-database-spring-test-version>1.5.3</embedded-database-spring-test-version>
+        <jacoco-maven-plugin.version>0.8.3</jacoco-maven-plugin.version>
     </properties>
 
     <dependencies>
@@ -240,6 +241,47 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+
+            <!-- Code Coverage -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <configuration>
+                    <includes>
+                        <include>com/bc/**/*</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/infrastructure/**/dto/*</exclude>
+                        <exclude>**/infrastructure/**/spec/*</exclude>
+                    </excludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>prepare-agent-unit-test</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report-unit-test</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test</outputDirectory>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>report-integration-test</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
 
             <!-- OpenAPI code generation-->

@@ -26,4 +26,9 @@ public interface AlbumsRepository {
    */
   List<Album> getAlbums();
 
+  /**
+   * Save All using L1 cache
+   */
+  List<Album> saveAll(List<Album> albums);
+
 }

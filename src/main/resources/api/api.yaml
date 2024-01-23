@@ -52,6 +52,35 @@ paths:
           $ref: '#/components/responses/error503'
         504:
           $ref: '#/components/responses/error504'
+    post:
+      tags:
+        - Enrichment
+      summary: Enrich the albums with all the photos and persist information.
+      description: "Enrich the information by obtaining all the albums and their corresponding photos via API, 
+      enhancing this data through an algorithm. The result is persisted in a database."
+      operationId: postEnrichmentAlbums
+      parameters:
+        - $ref: '#/components/parameters/X-B3-TraceId'
+        - $ref: '#/components/parameters/Authorization'
+      responses:
+        "204":
+          description: NO CONTENT
+        400:
+          $ref: '#/components/responses/error400'
+        401:
+          $ref: '#/components/responses/error401'
+        403:
+          $ref: '#/components/responses/error403'
+        404:
+          $ref: '#/components/responses/error404'
+        405:
+          $ref: '#/components/responses/error405'
+        500:
+          $ref: '#/components/responses/error500'
+        503:
+          $ref: '#/components/responses/error503'
+        504:
+          $ref: '#/components/responses/error504'
 
 
   /albums:

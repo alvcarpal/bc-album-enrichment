@@ -4,6 +4,7 @@ import com.bc.album.domain.enrich.selector.SelectorEnricher;
 import com.bc.album.domain.operational.Album;
 import com.bc.album.domain.operational.Photo;
 import com.bc.album.domain.port.in.EnrichService;
+import com.bc.album.domain.port.out.AlbumsRepository;
 import com.bc.album.infrastructure.webclient.ApiClient;
 import com.bc.album.infrastructure.webclient.factory.ApiClientFactory;
 import lombok.AllArgsConstructor;
@@ -30,13 +31,15 @@ public class EnrichUseCase implements EnrichService {
 
     private final SelectorEnricher selector;
 
+    private final AlbumsRepository repository;
+
     /**
      * {@inheritDoc}
      */
     @Override
     public List<Album> enrich(boolean persist) {
         List<Album> albums = selector.enriching(retrieveAlbumApiData(), retrievePhotoApiData(), "AlbumEnricher");
-        return persist ? null : albums;
+        return persist ? repository.saveAll(albums) : albums;
     }
 
     /**

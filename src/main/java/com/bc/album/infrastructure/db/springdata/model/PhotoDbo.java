@@ -4,6 +4,7 @@ import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
@@ -14,8 +15,9 @@ import javax.persistence.Table;
 @Table(name = "photo")
 public class PhotoDbo extends Audit{
 
-  @EmbeddedId
-  private PhotoPk pk;
+  @Id
+  @Column(name = "id")
+  private Integer id;
 
   @Column(name = "album_id")
   private Integer albumId;

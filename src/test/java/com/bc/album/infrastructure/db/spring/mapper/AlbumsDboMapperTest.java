@@ -37,4 +37,18 @@ public class AlbumsDboMapperTest {
         assertEquals(List.of(album), actualList);
     }
 
+    @Test
+    public void testToDboAlbum() {
+        when(mapper.toDbo(album)).thenReturn(albumDbo);
+        AlbumDbo actual = mapper.toDbo(album);
+        assertEquals(albumDbo, actual);
+    }
+
+    @Test
+    public void testToDboAlbumList() {
+        when(mapper.toDbo(List.of(album))).thenReturn(List.of(albumDbo));
+        List<AlbumDbo> actualList = mapper.toDbo(List.of(album));
+        assertEquals(List.of(albumDbo), actualList);
+    }
+
 }

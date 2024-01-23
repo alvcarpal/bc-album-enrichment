@@ -3,6 +3,7 @@ package com.bc.album.boot.spring.beans.services;
 import com.bc.album.application.usescases.enrich.EnrichUseCase;
 import com.bc.album.domain.enrich.selector.SelectorEnricher;
 import com.bc.album.domain.port.in.EnrichService;
+import com.bc.album.domain.port.out.AlbumsRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
@@ -18,8 +19,8 @@ public class EnrichConfiguration {
      * @return The created object.
      */
     @Bean
-    public EnrichService enrichService(RestTemplate restTemplate, SelectorEnricher selector) {
-        return new EnrichUseCase(restTemplate, selector);
+    public EnrichService enrichService(RestTemplate restTemplate, SelectorEnricher selector, AlbumsRepository repository) {
+        return new EnrichUseCase(restTemplate, selector, repository);
     }
 
     /**
