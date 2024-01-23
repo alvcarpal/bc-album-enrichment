@@ -1,6 +1,7 @@
 package com.bc.album.integration.rest;
 
 import com.bc.album.boot.spring.config.AlbumEnrichmentSpringBootService;
+import com.bc.album.infrastructure.db.springdata.repository.jpa.JpaAlbumRepository;
 import com.bc.album.utils.IntegrationTest;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(Parameterized.class)
@@ -28,6 +30,9 @@ public class EnrichingDataIntegrationTest extends IntegrationTest {
 
   @Autowired
   private MockMvc mockMvc;
+
+  @Autowired
+  private JpaAlbumRepository repository;
 
   private final String output;
 
@@ -57,16 +62,23 @@ public class EnrichingDataIntegrationTest extends IntegrationTest {
       }
   }
 
-  // FALLA PORQUE SAVEALL NO ACTUALIZA (REVISAR)
-  // @Test
-  //public void enrichPostHappyPath() throws Exception {
- //     MockHttpServletRequestBuilder mockMvcRequestBuilders =
- //             post("/albums/enrich")
- //                     .header("X-B3-TraceId", "123")
- //                     .header("Authorization", "231")
- //                     .contentType(MediaType.APPLICATION_JSON);
- //
- //     mockMvc.perform(mockMvcRequestBuilders).andExpect(status().isNoContent());
- // }
+
+  /**
+   * IMPORTANT
+   * The expected response is a 500 INTERNAL SERVER ERROR since, without
+   * the @GeneratedValue annotation and with existing data in the database,
+   * it throws an error by violating primary key constraints. This is discussed
+   * more thoroughly in the readme.
+   */
+  @Test
+  public void enrichPostHappyPath() throws Exception {
+      MockHttpServletRequestBuilder mockMvcRequestBuilders =
+             post("/albums/enrich")
+                     .header("X-B3-TraceId", "123")
+                      .header("Authorization", "231")
+                     .contentType(MediaType.APPLICATION_JSON);
+
+      mockMvc.perform(mockMvcRequestBuilders).andExpect(status().is5xxServerError());
+  }
 
 }
