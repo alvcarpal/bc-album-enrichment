@@ -1,5 +1,6 @@
 package com.bc.album.application.usescases.enrich;
 
+import com.bc.album.domain.enrich.selector.SelectorEnricher;
 import com.bc.album.domain.operational.Album;
 import com.bc.album.domain.operational.Photo;
 import com.bc.album.domain.port.in.EnrichService;
@@ -27,6 +28,8 @@ public class EnrichUseCase implements EnrichService {
 
     private final RestTemplate restTemplate;
 
+    private final SelectorEnricher selector;
+
     /**
      * {@inheritDoc}
      */
@@ -37,7 +40,8 @@ public class EnrichUseCase implements EnrichService {
 
         ApiClient<Photo> photoApiClient = ApiClientFactory.createApiClient(Photo.class, restTemplate);
         List<Photo> photos = photoApiClient.fetchData();
-        return null;
+
+        return selector.enriquecerDatos(albums, photos, "AlbumEnricher");
     }
 
 }
