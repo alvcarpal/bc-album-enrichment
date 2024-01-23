@@ -2,6 +2,7 @@ package com.bc.album.infrastructure.rest.spring.resource;
 
 import com.bc.album.domain.operational.Album;
 import com.bc.album.domain.port.in.AlbumsService;
+import com.bc.album.domain.port.in.EnrichService;
 import com.bc.album.infrastructure.rest.spring.dto.AlbumDto;
 import com.bc.album.infrastructure.rest.spring.mapper.AlbumsMapper;
 import org.junit.Test;
@@ -23,6 +24,9 @@ public class AlbumsResourceTest {
     private AlbumsService service;
 
     @Mock
+    private EnrichService enrichService;
+
+    @Mock
     private AlbumsMapper mapper;
 
     @InjectMocks
@@ -36,12 +40,27 @@ public class AlbumsResourceTest {
 
     @Test
     public void albumsOkTest() {
-        AlbumDto response = new AlbumDto();
         doReturn(List.of(album)).when(service).getAlbums();
         doReturn(List.of(response)).when(mapper).map(anyList());
         ResponseEntity<List<AlbumDto>> actual = resource.getAlbums("traceId", "Authorization");
         verify(service, times(1)).getAlbums();
         verify(mapper, times(1)).map(anyList());
+    }
+
+    @Test
+    public void enrichGetOkTest() {
+        doReturn(List.of(album)).when(enrichService).enrich(false);
+        doReturn(List.of(response)).when(mapper).map(anyList());
+        ResponseEntity<List<AlbumDto>> actual = resource.getEnrichmentAlbums("traceId", "Authorization");
+        verify(enrichService, times(1)).enrich(false);
+        verify(mapper, times(1)).map(anyList());
+    }
+
+    @Test
+    public void enrichPostOkTest() {
+        doReturn(List.of(album)).when(enrichService).enrich(true);
+        ResponseEntity<Void> actual = resource.postEnrichmentAlbums("traceId", "Authorization");
+        verify(enrichService, times(1)).enrich(true);
     }
 
 }

@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * In com.bc.album.boot.spring.config package.
  *
  * @author Álvaro Carmona
- * @since 18/01/2024
+ * @since 22/01/2024
  */
 @SpringBootApplication(scanBasePackages = {
         "com.bc.album.infrastructure",

@@ -1,11 +1,14 @@
-package com.bc.album.domain.port.out;
+package com.bc.album.application.usescases.album;
 
 import com.bc.album.domain.operational.Album;
+import com.bc.album.domain.port.in.AlbumsService;
+import com.bc.album.domain.port.out.AlbumsRepository;
+import lombok.AllArgsConstructor;
 import java.util.List;
 
 /**
- * AlbumsRepository interface.
- * In com.bc.album.domain.port.out
+ * AlbumsService interface implementation.
+ * In com.bc.album.application.usescases package.
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
@@ -16,19 +19,17 @@ import java.util.List;
  * @author Álvaro Carmona
  * @since 22/01/2024
  */
-public interface AlbumsRepository {
+@AllArgsConstructor
+public class AlbumsUseCase implements AlbumsService {
 
-  /**
-   * Serves the purpose of accessing an H2 database and retrieving comprehensive information
-   * about all albums stored within the database.
-   *
-   * @return The albums' information.
-   */
-  List<Album> getAlbums();
+    private final AlbumsRepository repository;
 
-  /**
-   * Save All using L1 cache
-   */
-  List<Album> saveAll(List<Album> albums);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Album> getAlbums() {
+        return repository.getAlbums();
+    }
 
 }

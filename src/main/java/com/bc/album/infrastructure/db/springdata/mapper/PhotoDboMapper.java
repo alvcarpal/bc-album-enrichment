@@ -1,7 +1,6 @@
 package com.bc.album.infrastructure.db.springdata.mapper;
 
 import com.bc.album.domain.operational.Photo;
-import com.bc.album.infrastructure.db.springdata.model.AlbumDbo;
 import com.bc.album.infrastructure.db.springdata.model.PhotoDbo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -24,10 +23,16 @@ public interface PhotoDboMapper {
 
     /**
      * Map the given dbo photo to domain.
-     * @param photo {@link AlbumDbo} object.
-     * @return The mapped dto object.
+     * @param photo {@link PhotoDbo} object.
+     * @return The mapped domain object.
      */
-    @Mapping(target = "id", source = "pk.id")
     Photo map(PhotoDbo photo);
+
+    /**
+     * Map the given domain photo to dbo.
+     * @param photo {@link Photo} object.
+     * @return The mapped dbo object.
+     */
+    PhotoDbo toDbo(Photo photo);
 
 }

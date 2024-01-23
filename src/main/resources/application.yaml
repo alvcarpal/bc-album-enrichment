@@ -42,6 +42,17 @@ spring:
     # password: admin
     initialize: true
 
+com.bc.album.cfg:
+  searchLimit: 10000
+  maxRestTemplateRetries: 4 # the first and another 3 tries
+  httpPool:
+    maxPerRoute: 600 # cnx
+    maxTotal: 600 # it only requests to one searcher route
+    connectionRequestTimeout: 12500 #ms
+    connectTimeout: 2000 #ms
+    socketTimeout: 12500 #ms
+    connectTimeToLive: 30 #renew interval seconds
+
 logging:
   level:
     com.exercise.template: DEBUG

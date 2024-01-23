@@ -36,7 +36,13 @@ public enum ErrorCode {
           HttpStatus.INTERNAL_SERVER_ERROR,
           ErrorLevel.FATAL,
           "Error formatting the result",
-          "Unable to convert the result: %s");
+          "Unable to convert the result: %s"),
+  API_EXCHANGE_ERROR(
+          "03500001",
+          HttpStatus.INTERNAL_SERVER_ERROR,
+          ErrorLevel.FATAL,
+          "Error during API communication",
+          "Unable to establish API communication: %s");
 
   /**
    * The code is an 8-digit code with the format LLHHHNNN, where LL is the layer (01 -> application, 02 -> domain,
