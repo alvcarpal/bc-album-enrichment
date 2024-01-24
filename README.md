@@ -40,9 +40,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Data model</a></li>
-        <li><a href="#built-with">Algorithm</a></li>
-        <li><a href="#built-with">Design Patterns</a></li>
+        <li><a href="#data-model">Data model</a></li>
+        <li><a href="#algorithm">Algorithm</a></li>
+        <li><a href="#design-patterns">Design Patterns</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
