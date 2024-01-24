@@ -290,7 +290,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/al
 [IntelliJ-url]: https://www.jetbrains.com/idea/download/?section=windows
 [Java-11-url]: https://jdk.java.net/11/
 [POSTMAN.com]: https://img.shields.io/badge/postman%20-F79114?style=for-the-badge&logo=postman%20pay&logoColor=white
-[POSTMAN-url]: https://github.com/alvcarpal/bc-album-enrichment/blob/master/src/main/resource/collection
+[POSTMAN-url]: https://github.com/alvcarpal/bc-album-enrichment/blob/master/src/main/resources/collection
 
 
 
