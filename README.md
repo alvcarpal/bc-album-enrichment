@@ -40,9 +40,9 @@
     <li>
       <a href="#about-the-project">About The Project</a>
       <ul>
-        <li><a href="#built-with">Data model</a></li>
-        <li><a href="#built-with">Algorithm</a></li>
-        <li><a href="#built-with">Design Patterns</a></li>
+        <li><a href="#data-model">Data model</a></li>
+        <li><a href="#algorithm">Algorithm</a></li>
+        <li><a href="#design-patterns">Design Patterns</a></li>
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
@@ -290,7 +290,7 @@ Project Link: [https://github.com/your_username/repo_name](https://github.com/al
 [IntelliJ-url]: https://www.jetbrains.com/idea/download/?section=windows
 [Java-11-url]: https://jdk.java.net/11/
 [POSTMAN.com]: https://img.shields.io/badge/postman%20-F79114?style=for-the-badge&logo=postman%20pay&logoColor=white
-[POSTMAN-url]: https://github.com/alvcarpal/bc-album-enrichment/blob/master/src/main/resource/collection
+[POSTMAN-url]: https://github.com/alvcarpal/bc-album-enrichment/blob/master/src/main/resources/collection
 
 
 
