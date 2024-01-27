@@ -8,8 +8,8 @@ import lombok.extern.log4j.Log4j2;
 /**
  * TimedRequest class.
  *
- * @author Grupo Santander - PagoNxt - GTS - Core.
- * @since 15/03/2022
+ * @author Álvaro Carmona.
+ * @since 25/01/2024
  *
  * @param <I> The Input request.
  * @param <O> The Output response.
